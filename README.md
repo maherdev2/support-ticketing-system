@@ -1,12 +1,14 @@
 # نظام دعم فني - IT Support Ticketing System
 
-نظام متكامل لإدارة تذاكر الدعم الفني مع دعم كامل للغة العربية و RTL.
+نظام متكامل لإدارة تذاكر الدعم الفني باللغتين العربية والإنجليزية، مع تبديل اتجاه الواجهة تلقائياً بين RTL و LTR.
+
+يمكن تغيير اللغة من زر **English / العربية** في صفحة تسجيل الدخول أو الشريط العلوي بعد الدخول. يُحفظ الاختيار على هذا المتصفح.
 
 ## التقنيات المستخدمة
 
 - **Backend:** Laravel 11
 - **Frontend:** Vue.js 3 + Inertia.js
-- **Styling:** Tailwind CSS (Dark Mode + RTL)
+- **Styling:** Tailwind CSS (Dark Mode + RTL/LTR)
 - **Real-time:** Laravel Reverb (WebSocket)
 - **Database:** MySQL
 

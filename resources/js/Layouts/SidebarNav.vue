@@ -1,6 +1,6 @@
 <template>
-  <nav aria-label="التنقل الرئيسي">
-    <p class="px-3 pb-3 text-xs font-medium text-slate-500">القائمة الرئيسية</p>
+  <nav :aria-label="t('التنقل الرئيسي')">
+    <p class="px-3 pb-3 text-xs font-medium text-slate-500">{{ t('القائمة الرئيسية') }}</p>
     <div class="space-y-1">
       <Link
         v-for="item in items"
@@ -16,7 +16,7 @@
         <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" :d="item.icon" />
         </svg>
-        <span>{{ item.label }}</span>
+        <span>{{ t(item.label) }}</span>
       </Link>
     </div>
   </nav>
@@ -25,6 +25,7 @@
 <script setup>
 import { computed } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import { t } from '../i18n';
 
 const emit = defineEmits(['navigate']);
 const page = usePage();

@@ -9,7 +9,7 @@
             <Link
               :href="route('tickets.index')"
               class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors shrink-0"
-              title="العودة للتذاكر"
+              :title="t('العودة للتذاكر')"
             >
               <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -41,7 +41,7 @@
               <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              <span>تغيير الحالة</span>
+              <span>{{ t('تغيير الحالة') }}</span>
             </button>
 
             <button
@@ -52,7 +52,7 @@
               <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <span>تعيين لموظف</span>
+              <span>{{ t('تعيين لموظف') }}</span>
             </button>
           </div>
         </div>
@@ -71,7 +71,7 @@
                 <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                وصف المشكلة
+                {{ t('وصف المشكلة') }}
               </h2>
               <span class="text-xs text-slate-400">{{ formatDate(ticket.created_at) }}</span>
             </div>
@@ -80,7 +80,7 @@
 
             <!-- Attachments -->
             <div v-if="ticket.attachments && ticket.attachments.length > 0" class="pt-4 border-t border-slate-800">
-              <h3 class="text-xs font-semibold text-slate-400 mb-3">الملفات والمستندات المرفقة ({{ ticket.attachments.length }})</h3>
+              <h3 class="text-xs font-semibold text-slate-400 mb-3">{{ t('الملفات والمستندات المرفقة') }} ({{ ticket.attachments.length }})</h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <a
                   v-for="attachment in ticket.attachments"
@@ -113,13 +113,13 @@
                 <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
-                سجل المتابعة والردود ({{ ticket.replies ? ticket.replies.length : 0 }})
+                {{ t('سجل المتابعة والردود') }} ({{ ticket.replies ? ticket.replies.length : 0 }})
               </h2>
             </div>
 
             <!-- Empty replies state -->
             <div v-if="!ticket.replies || ticket.replies.length === 0" class="bg-slate-900/60 border border-slate-800 rounded-2xl p-8 text-center text-slate-400 text-sm">
-              لا توجد ردود أو تحديثات بعد على هذه التذكرة.
+              {{ t('لا توجد ردود أو تحديثات بعد على هذه التذكرة.') }}
             </div>
 
             <!-- Reply Items -->
@@ -145,15 +145,15 @@
                       reply.is_internal ? 'bg-amber-600' : 'bg-indigo-600'
                     ]"
                   >
-                    {{ reply.is_system ? '⚙️' : reply.user?.name?.charAt(0) || 'م' }}
+                    {{ reply.is_system ? '⚙️' : reply.user?.name?.charAt(0) || t('م') }}
                   </div>
                   <div>
                     <div class="flex items-center gap-2">
                       <span class="text-xs font-bold text-slate-200">
-                        {{ reply.is_system ? 'إشعار من النظام' : reply.user?.name }}
+                        {{ reply.is_system ? t('إشعار من النظام') : reply.user?.name }}
                       </span>
                       <span v-if="reply.user?.role" class="text-[10px] px-2 py-0.2 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
-                        {{ reply.user.role.name_ar || reply.user.role.name }}
+                        {{ localizedName(reply.user.role) }}
                       </span>
                     </div>
                     <span class="text-[11px] text-slate-500">{{ formatDate(reply.created_at) }}</span>
@@ -163,10 +163,10 @@
                 <!-- Badges -->
                 <div class="flex items-center gap-2">
                   <span v-if="reply.is_internal" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                    🔒 ملاحظة داخلية
+                    {{ t('🔒 ملاحظة داخلية') }}
                   </span>
                   <span v-if="reply.is_system" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/40">
-                    تحديث تلقائي
+                    {{ t('تحديث تلقائي') }}
                   </span>
                 </div>
               </div>
@@ -177,7 +177,7 @@
                   'text-sm leading-relaxed whitespace-pre-wrap',
                   reply.is_system ? 'text-blue-200' : reply.is_internal ? 'text-amber-100' : 'text-slate-300'
                 ]"
-                v-html="sanitizeHtml(reply.message)"
+                v-html="sanitizeHtml(reply.is_system ? translateMessage(reply.message) : reply.message)"
               ></div>
 
               <!-- Reply Attachments -->
@@ -204,7 +204,7 @@
               <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
-              إضافة رد جديد
+              {{ t('إضافة رد جديد') }}
             </h3>
 
             <form @submit.prevent="submitReply" class="space-y-4">
@@ -213,7 +213,7 @@
                   v-model="replyForm.message"
                   required
                   rows="4"
-                  placeholder="اكتب ردك أو الإجراء المتخذ هنا..."
+                  :placeholder="t('اكتب ردك أو الإجراء المتخذ هنا...')"
                   class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm leading-relaxed"
                 ></textarea>
               </div>
@@ -236,7 +236,7 @@
                   <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                   </svg>
-                  <span>إرفاق ملفات</span>
+                  <span>{{ t('إرفاق ملفات') }}</span>
                 </button>
 
                 <!-- Internal Note Toggle (if authorized) -->
@@ -246,7 +246,7 @@
                     v-model="replyForm.is_internal"
                     class="rounded bg-slate-800 border-amber-600 text-amber-500 focus:ring-amber-500 focus:ring-offset-slate-900"
                   />
-                  <span>ملاحظة داخلية (مرئية لفريق الدعم فقط)</span>
+                  <span>{{ t('ملاحظة داخلية (مرئية لفريق الدعم فقط)') }}</span>
                 </label>
               </div>
 
@@ -268,7 +268,7 @@
                   :disabled="replyForm.processing"
                   class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-all disabled:opacity-50"
                 >
-                  {{ replyForm.processing ? 'جارٍ الإرسال...' : 'إرسال الرد' }}
+                  {{ replyForm.processing ? t('جارٍ الإرسال...') : t('إرسال الرد') }}
                 </button>
               </div>
             </form>
@@ -280,14 +280,14 @@
         <div class="space-y-6">
           <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
             <h3 class="text-sm font-bold text-white uppercase tracking-wider border-b border-slate-800 pb-3">
-              بيانات ومعلومات التذكرة
+              {{ t('بيانات ومعلومات التذكرة') }}
             </h3>
 
             <dl class="space-y-3.5 text-xs">
               
               <!-- Status -->
               <div>
-                <dt class="text-slate-400 mb-1">الحالة الحالية</dt>
+                <dt class="text-slate-400 mb-1">{{ t('الحالة الحالية') }}</dt>
                 <dd>
                   <span :class="['px-2.5 py-1 rounded-full font-semibold inline-block', statusBadge.class]">
                     {{ statusBadge.label }}
@@ -297,7 +297,7 @@
 
               <!-- Priority -->
               <div>
-                <dt class="text-slate-400 mb-1">الأولوية</dt>
+                <dt class="text-slate-400 mb-1">{{ t('الأولوية') }}</dt>
                 <dd>
                   <span :class="['px-2.5 py-1 rounded-full font-semibold inline-block', priorityBadge.class]">
                     {{ priorityBadge.label }}
@@ -307,54 +307,54 @@
 
               <!-- Creator -->
               <div>
-                <dt class="text-slate-400">مقدم الطلب</dt>
-                <dd class="text-slate-200 font-semibold mt-0.5">{{ ticket.creator?.name || 'غير محدد' }}</dd>
+                <dt class="text-slate-400">{{ t('مقدم الطلب') }}</dt>
+                <dd class="text-slate-200 font-semibold mt-0.5">{{ ticket.creator?.name || t('غير محدد') }}</dd>
                 <dd class="text-slate-500 text-[11px]">{{ ticket.creator?.email }}</dd>
               </div>
 
               <!-- Assignee -->
               <div>
-                <dt class="text-slate-400">المكلف بالحل (Support)</dt>
+                <dt class="text-slate-400">{{ t('المكلف بالحل (Support)') }}</dt>
                 <dd v-if="ticket.assigned_user" class="text-slate-200 font-semibold mt-0.5 flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                   {{ ticket.assigned_user.name }}
                 </dd>
-                <dd v-else class="text-slate-500 italic mt-0.5">لم يتم التعيين بعد</dd>
+                <dd v-else class="text-slate-500 italic mt-0.5">{{ t('لم يتم التعيين بعد') }}</dd>
               </div>
 
               <!-- Department -->
               <div v-if="ticket.department">
-                <dt class="text-slate-400">القسم المعني</dt>
-                <dd class="text-slate-200 font-medium mt-0.5">{{ ticket.department.name_ar || ticket.department.name }}</dd>
+                <dt class="text-slate-400">{{ t('القسم المعني') }}</dt>
+                <dd class="text-slate-200 font-medium mt-0.5">{{ localizedName(ticket.department) }}</dd>
               </div>
 
               <!-- Equipment -->
               <div v-if="ticket.equipment">
-                <dt class="text-slate-400">الجهاز / المعدة</dt>
+                <dt class="text-slate-400">{{ t('الجهاز / المعدة') }}</dt>
                 <dd class="text-slate-200 font-medium mt-0.5">
                   {{ ticket.equipment.brand }} {{ ticket.equipment.model }}
                 </dd>
-                <dd class="text-slate-500 font-mono text-[11px]">الرقم التسلسلي: {{ ticket.equipment.serial_number }}</dd>
+                <dd class="text-slate-500 font-mono text-[11px]">{{ t('الرقم التسلسلي:') }} {{ ticket.equipment.serial_number }}</dd>
               </div>
 
               <!-- Category -->
               <div v-if="ticket.category">
-                <dt class="text-slate-400">التصنيف</dt>
-                <dd class="text-slate-200 font-medium mt-0.5">{{ ticket.category }}</dd>
+                <dt class="text-slate-400">{{ t('التصنيف') }}</dt>
+                <dd class="text-slate-200 font-medium mt-0.5">{{ localizedCategory(ticket.category) }}</dd>
               </div>
 
               <!-- Timestamps -->
               <div class="pt-3 border-t border-slate-800 space-y-2 text-[11px] text-slate-400">
                 <div class="flex justify-between">
-                  <span>تاريخ الإنشاء:</span>
+                  <span>{{ t('تاريخ الإنشاء:') }}</span>
                   <span class="text-slate-300">{{ formatDate(ticket.created_at) }}</span>
                 </div>
                 <div v-if="ticket.assigned_at" class="flex justify-between">
-                  <span>تاريخ التعيين:</span>
+                  <span>{{ t('تاريخ التعيين:') }}</span>
                   <span class="text-slate-300">{{ formatDate(ticket.assigned_at) }}</span>
                 </div>
                 <div v-if="ticket.resolved_at" class="flex justify-between">
-                  <span>تاريخ الحل:</span>
+                  <span>{{ t('تاريخ الحل:') }}</span>
                   <span class="text-emerald-400 font-semibold">{{ formatDate(ticket.resolved_at) }}</span>
                 </div>
               </div>
@@ -370,20 +370,20 @@
     <!-- Status Change Modal -->
     <div v-if="showStatusModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
-        <h3 class="text-lg font-bold text-white">تغيير حالة التذكرة</h3>
-        <p class="text-xs text-slate-400">حدد الحالة الجديدة للتذكرة لتحديث مسار العمل</p>
+        <h3 class="text-lg font-bold text-white">{{ t('تغيير حالة التذكرة') }}</h3>
+        <p class="text-xs text-slate-400">{{ t('حدد الحالة الجديدة للتذكرة لتحديث مسار العمل') }}</p>
 
         <div>
           <select
             v-model="statusUpdateForm.status"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
           >
-            <option value="open">مفتوحة (Open)</option>
-            <option value="assigned">معينة (Assigned)</option>
-            <option value="in_progress">قيد المعالجة (In Progress)</option>
-            <option value="waiting_user">في انتظار المستخدم (Waiting User)</option>
-            <option value="resolved">محلولة (Resolved)</option>
-            <option value="closed">مغلقة (Closed)</option>
+            <option value="open">{{ t('مفتوحة (Open)') }}</option>
+            <option value="assigned">{{ t('معينة (Assigned)') }}</option>
+            <option value="in_progress">{{ t('قيد المعالجة (In Progress)') }}</option>
+            <option value="waiting_user">{{ t('في انتظار المستخدم (Waiting User)') }}</option>
+            <option value="resolved">{{ t('محلولة (Resolved)') }}</option>
+            <option value="closed">{{ t('مغلقة (Closed)') }}</option>
           </select>
         </div>
 
@@ -392,13 +392,13 @@
             @click="showStatusModal = false"
             class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium"
           >
-            إلغاء
+            {{ t('إلغاء') }}
           </button>
           <button
             @click="updateStatus"
             class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow"
           >
-            حفظ التغيير
+            {{ t('حفظ التغيير') }}
           </button>
         </div>
       </div>
@@ -407,15 +407,15 @@
     <!-- Assign Modal -->
     <div v-if="showAssignModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-4">
-        <h3 class="text-lg font-bold text-white">تعيين التذكرة لموظف الدعم</h3>
-        <p class="text-xs text-slate-400">اختر موظف الدعم الفني المسؤول عن حل هذه التذكرة</p>
+        <h3 class="text-lg font-bold text-white">{{ t('تعيين التذكرة لموظف الدعم') }}</h3>
+        <p class="text-xs text-slate-400">{{ t('اختر موظف الدعم الفني المسؤول عن حل هذه التذكرة') }}</p>
 
         <div>
           <select
             v-model="assignUpdateForm.assigned_to"
             class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
           >
-            <option :value="null">إلغاء التعيين (غير معين)</option>
+            <option :value="null">{{ t('إلغاء التعيين (غير معين)') }}</option>
             <option v-for="u in supportUsers" :key="u.id" :value="u.id">
               {{ u.name }}
             </option>
@@ -427,13 +427,13 @@
             @click="showAssignModal = false"
             class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium"
           >
-            إلغاء
+            {{ t('إلغاء') }}
           </button>
           <button
             @click="updateAssignee"
             class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow"
           >
-            حفظ التعيين
+            {{ t('حفظ التعيين') }}
           </button>
         </div>
       </div>
@@ -447,6 +447,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useForm, router, Link } from '@inertiajs/vue3';
 import DOMPurify from 'dompurify';
 import AppLayout from '../../Layouts/AppLayout.vue';
+import { locale, localizedCategory, localizedName, t, translateMessage } from '../../i18n';
 
 const props = defineProps({
   ticket: Object,
@@ -512,29 +513,29 @@ const sanitizedDescription = computed(() => {
 
 const priorityBadge = computed(() => {
   const map = {
-    urgent: { label: 'عاجلة جداً', class: 'bg-rose-500/20 text-rose-300 border border-rose-500/40' },
-    high: { label: 'عالية', class: 'bg-orange-500/20 text-orange-300 border border-orange-500/40' },
-    medium: { label: 'متوسطة', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' },
-    low: { label: 'منخفضة', class: 'bg-slate-700 text-slate-300 border border-slate-600' },
+    urgent: { label: t('عاجلة جداً'), class: 'bg-rose-500/20 text-rose-300 border border-rose-500/40' },
+    high: { label: t('عالية'), class: 'bg-orange-500/20 text-orange-300 border border-orange-500/40' },
+    medium: { label: t('متوسطة'), class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' },
+    low: { label: t('منخفضة'), class: 'bg-slate-700 text-slate-300 border border-slate-600' },
   };
   return map[props.ticket.priority] || map.medium;
 });
 
 const statusBadge = computed(() => {
   const map = {
-    open: { label: 'مفتوحة', class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' },
-    assigned: { label: 'معينة', class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' },
-    in_progress: { label: 'قيد المعالجة', class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' },
-    waiting_user: { label: 'في انتظار رد المستخدم', class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' },
-    resolved: { label: 'تم حلها', class: 'bg-teal-500/20 text-teal-300 border border-teal-500/40' },
-    closed: { label: 'مغلقة', class: 'bg-slate-700 text-slate-400 border border-slate-600' },
+    open: { label: t('مفتوحة'), class: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' },
+    assigned: { label: t('معينة'), class: 'bg-blue-500/20 text-blue-300 border border-blue-500/40' },
+    in_progress: { label: t('قيد المعالجة'), class: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' },
+    waiting_user: { label: t('في انتظار رد المستخدم'), class: 'bg-amber-500/20 text-amber-300 border border-amber-500/40' },
+    resolved: { label: t('تم حلها'), class: 'bg-teal-500/20 text-teal-300 border border-teal-500/40' },
+    closed: { label: t('مغلقة'), class: 'bg-slate-700 text-slate-400 border border-slate-600' },
   };
   return map[props.ticket.status] || map.open;
 });
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
-  return new Date(dateString).toLocaleString('ar-SA', {
+  return new Date(dateString).toLocaleString(locale.value === 'en' ? 'en-US' : 'ar-SA', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -546,7 +547,7 @@ const formatDate = (dateString) => {
 const handleReplyFiles = (e) => {
   const files = Array.from(e.target.files);
   if (replyForm.attachments.length + files.length > 5) {
-    alert('الحد الأقصى للمرفقات هو 5 ملفات');
+    alert(t('الحد الأقصى للمرفقات هو 5 ملفات'));
     return;
   }
   replyForm.attachments.push(...files);

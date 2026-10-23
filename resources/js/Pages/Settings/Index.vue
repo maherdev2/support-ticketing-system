@@ -12,9 +12,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
-            إعدادات النظام
+            {{ t('إعدادات النظام') }}
           </h1>
-          <p class="text-sm text-slate-400 mt-1 mr-12">إدارة المستخدمين والصلاحيات والأقسام</p>
+          <p class="text-sm text-slate-400 mt-1 ms-12">{{ t('إدارة المستخدمين والصلاحيات والأقسام') }}</p>
         </div>
         <button
           @click="openCreateModal"
@@ -23,7 +23,7 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
-          إضافة موظف جديد
+          {{ t('إضافة موظف جديد') }}
         </button>
       </div>
 
@@ -31,23 +31,23 @@
       <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center">
           <div class="text-3xl font-black text-white">{{ stats.total }}</div>
-          <div class="text-xs text-slate-400 mt-1">إجمالي الموظفين</div>
+          <div class="text-xs text-slate-400 mt-1">{{ t('إجمالي الموظفين') }}</div>
         </div>
         <div class="bg-slate-900/80 border border-violet-500/20 rounded-2xl p-4 text-center">
           <div class="text-3xl font-black text-violet-400">{{ stats.admins }}</div>
-          <div class="text-xs text-slate-400 mt-1">مديرو النظام</div>
+          <div class="text-xs text-slate-400 mt-1">{{ t('مديرو النظام') }}</div>
         </div>
         <div class="bg-slate-900/80 border border-cyan-500/20 rounded-2xl p-4 text-center">
           <div class="text-3xl font-black text-cyan-400">{{ stats.support }}</div>
-          <div class="text-xs text-slate-400 mt-1">موظفو الدعم</div>
+          <div class="text-xs text-slate-400 mt-1">{{ t('موظفو الدعم') }}</div>
         </div>
         <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-center">
           <div class="text-3xl font-black text-slate-300">{{ stats.users }}</div>
-          <div class="text-xs text-slate-400 mt-1">المستخدمون</div>
+          <div class="text-xs text-slate-400 mt-1">{{ t('المستخدمون') }}</div>
         </div>
         <div class="bg-slate-900/80 border border-emerald-500/20 rounded-2xl p-4 text-center">
           <div class="text-3xl font-black text-emerald-400">{{ stats.active }}</div>
-          <div class="text-xs text-slate-400 mt-1">حسابات نشطة</div>
+          <div class="text-xs text-slate-400 mt-1">{{ t('حسابات نشطة') }}</div>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
               type="text"
               v-model="searchQuery"
               @keyup.enter="applyFilters"
-              placeholder="ابحث بالاسم، البريد الإلكتروني، أو رقم الموظف..."
+              :placeholder="t('ابحث بالاسم، البريد الإلكتروني، أو رقم الموظف...')"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500"
             />
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -72,20 +72,20 @@
           <!-- Role Filter -->
           <div class="md:col-span-3">
             <select v-model="selectedRole" @change="applyFilters" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500">
-              <option value="">جميع الأدوار</option>
-              <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name_ar || role.name }}</option>
+              <option value="">{{ t('جميع الأدوار') }}</option>
+              <option v-for="role in roles" :key="role.id" :value="role.id">{{ localizedName(role) }}</option>
             </select>
           </div>
           <!-- Department Filter -->
           <div class="md:col-span-3">
             <select v-model="selectedDept" @change="applyFilters" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500">
-              <option value="">جميع الأقسام</option>
-              <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ dept.name_ar || dept.name }}</option>
+              <option value="">{{ t('جميع الأقسام') }}</option>
+              <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ localizedName(dept) }}</option>
             </select>
           </div>
           <!-- Reset -->
           <div class="md:col-span-1 flex items-center">
-            <button @click="resetFilters" class="w-full h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 text-xs transition-colors" title="إعادة ضبط">
+            <button @click="resetFilters" class="w-full h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 text-xs transition-colors" :title="t('إعادة ضبط')">
               <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
@@ -97,16 +97,16 @@
       <!-- Users Table -->
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse">
+          <table class="w-full text-start border-collapse">
             <thead>
               <tr class="bg-slate-800/60 border-b border-slate-800 text-xs font-semibold text-slate-400">
-                <th class="py-3.5 px-4">الموظف</th>
-                <th class="py-3.5 px-4">رقم الموظف</th>
-                <th class="py-3.5 px-4">الدور / الصلاحية</th>
-                <th class="py-3.5 px-4">القسم</th>
-                <th class="py-3.5 px-4">الهاتف</th>
-                <th class="py-3.5 px-4 text-center">الحالة</th>
-                <th class="py-3.5 px-4 text-center">إجراءات</th>
+                <th class="py-3.5 px-4">{{ t('الموظف') }}</th>
+                <th class="py-3.5 px-4">{{ t('رقم الموظف') }}</th>
+                <th class="py-3.5 px-4">{{ t('الدور / الصلاحية') }}</th>
+                <th class="py-3.5 px-4">{{ t('القسم') }}</th>
+                <th class="py-3.5 px-4">{{ t('الهاتف') }}</th>
+                <th class="py-3.5 px-4 text-center">{{ t('الحالة') }}</th>
+                <th class="py-3.5 px-4 text-center">{{ t('إجراءات') }}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-800/60 text-sm">
@@ -141,12 +141,12 @@
                 <!-- Role -->
                 <td class="py-4 px-4">
                   <span :class="['inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold', getRoleBadge(user.role?.name)]">
-                    {{ user.role?.name_ar || user.role?.name || 'غير محدد' }}
+                    {{ localizedName(user.role) || t('غير محدد') }}
                   </span>
                 </td>
                 <!-- Department -->
                 <td class="py-4 px-4 text-xs text-slate-300">
-                  {{ user.department?.name_ar || user.department?.name || '—' }}
+                  {{ localizedName(user.department) || '—' }}
                 </td>
                 <!-- Phone -->
                 <td class="py-4 px-4 text-xs text-slate-400 font-mono">
@@ -162,10 +162,10 @@
                         ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
                         : 'bg-rose-500/10 text-rose-400 border-rose-500/20 hover:bg-rose-500/20'
                     ]"
-                    :title="user.is_active ? 'انقر لتعطيل الحساب' : 'انقر لتفعيل الحساب'"
+                    :title="user.is_active ? t('انقر لتعطيل الحساب') : t('انقر لتفعيل الحساب')"
                   >
                     <span :class="['w-1.5 h-1.5 rounded-full', user.is_active ? 'bg-emerald-400' : 'bg-rose-400']"></span>
-                    {{ user.is_active ? 'نشط' : 'معطل' }}
+                    {{ user.is_active ? t('نشط') : t('معطل') }}
                   </button>
                 </td>
                 <!-- Actions -->
@@ -174,7 +174,7 @@
                     <button
                       @click="openEditModal(user)"
                       class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-indigo-600/20 text-slate-400 hover:text-indigo-400 border border-slate-700 hover:border-indigo-500/40 flex items-center justify-center transition-all"
-                      title="تعديل"
+                      :title="t('تعديل')"
                     >
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -183,7 +183,7 @@
                     <button
                       @click="confirmDelete(user)"
                       class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-rose-600/20 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/40 flex items-center justify-center transition-all"
-                      title="حذف"
+                      :title="t('حذف')"
                     >
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -203,14 +203,14 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-slate-200">لا يوجد موظفون مطابقون</h3>
-          <p class="text-sm text-slate-400 mt-1">جرب تغيير معايير البحث</p>
+          <h3 class="text-lg font-bold text-slate-200">{{ t('لا يوجد موظفون مطابقون') }}</h3>
+          <p class="text-sm text-slate-400 mt-1">{{ t('جرب تغيير معايير البحث') }}</p>
         </div>
 
         <!-- Pagination -->
         <div v-if="users.links && users.links.length > 3" class="bg-slate-800/40 border-t border-slate-800 px-4 py-3 flex items-center justify-between">
           <div class="text-xs text-slate-400">
-            عرض {{ users.from || 0 }} إلى {{ users.to || 0 }} من أصل {{ users.total || 0 }} موظف
+            {{ t('عرض') }} {{ users.from || 0 }} {{ t('إلى') }} {{ users.to || 0 }} {{ t('من أصل') }} {{ users.total || 0 }} {{ t('موظف') }}
           </div>
           <div class="flex items-center gap-1">
             <Link
@@ -241,7 +241,7 @@
               <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="editingUser ? 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' : 'M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z'" />
               </svg>
-              {{ editingUser ? 'تعديل بيانات الموظف' : 'إضافة موظف جديد' }}
+              {{ editingUser ? t('تعديل بيانات الموظف') : t('إضافة موظف جديد') }}
             </h2>
             <button @click="closeModal" class="w-8 h-8 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,31 +256,31 @@
             <!-- Name + Employee ID -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1.5">الاسم الكامل *</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('الاسم الكامل *') }}</label>
                 <input
                   v-model="form.name"
                   type="text"
                   required
-                  placeholder="محمد أحمد العمري"
+                  :placeholder="t('محمد أحمد العمري')"
                   class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500"
                 />
-                <p v-if="errors.name" class="text-rose-400 text-xs mt-1">{{ errors.name }}</p>
+                <p v-if="errors.name" class="text-rose-400 text-xs mt-1">{{ translateMessage(errors.name) }}</p>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1.5">رقم الموظف</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('رقم الموظف') }}</label>
                 <input
                   v-model="form.employee_id"
                   type="text"
                   placeholder="EMP-001"
                   class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 font-mono"
                 />
-                <p v-if="errors.employee_id" class="text-rose-400 text-xs mt-1">{{ errors.employee_id }}</p>
+                <p v-if="errors.employee_id" class="text-rose-400 text-xs mt-1">{{ translateMessage(errors.employee_id) }}</p>
               </div>
             </div>
 
             <!-- Email -->
             <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">البريد الإلكتروني *</label>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('البريد الإلكتروني *') }}</label>
               <input
                 v-model="form.email"
                 type="email"
@@ -289,49 +289,49 @@
                 class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 ltr"
                 dir="ltr"
               />
-              <p v-if="errors.email" class="text-rose-400 text-xs mt-1">{{ errors.email }}</p>
+              <p v-if="errors.email" class="text-rose-400 text-xs mt-1">{{ translateMessage(errors.email) }}</p>
             </div>
 
             <!-- Password -->
             <div>
               <label class="block text-xs font-semibold text-slate-400 mb-1.5">
-                كلمة المرور {{ editingUser ? '(اتركها فارغة إذا لم تريد تغييرها)' : '*' }}
+                كلمة المرور {{ editingUser ? t('(اتركها فارغة إذا لم تريد تغييرها)') : '*' }}
               </label>
               <input
                 v-model="form.password"
                 type="password"
                 :required="!editingUser"
-                placeholder="8 أحرف على الأقل"
+                :placeholder="t('8 أحرف على الأقل')"
                 class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
-              <p v-if="errors.password" class="text-rose-400 text-xs mt-1">{{ errors.password }}</p>
+              <p v-if="errors.password" class="text-rose-400 text-xs mt-1">{{ translateMessage(errors.password) }}</p>
             </div>
 
             <!-- Role + Department -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1.5">الدور / الصلاحية *</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('الدور / الصلاحية *') }}</label>
                 <select
                   v-model="form.role_id"
                   required
                   class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
-                  <option value="">-- اختر الدور --</option>
+                  <option value="">{{ t('-- اختر الدور --') }}</option>
                   <option v-for="role in roles" :key="role.id" :value="role.id">
-                    {{ role.name_ar || role.name }}
+                    {{ localizedName(role) }}
                   </option>
                 </select>
-                <p v-if="errors.role_id" class="text-rose-400 text-xs mt-1">{{ errors.role_id }}</p>
+                <p v-if="errors.role_id" class="text-rose-400 text-xs mt-1">{{ translateMessage(errors.role_id) }}</p>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1.5">القسم</label>
+                <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('القسم') }}</label>
                 <select
                   v-model="form.department_id"
                   class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500"
                 >
-                  <option :value="null">-- بدون قسم --</option>
+                  <option :value="null">{{ t('-- بدون قسم --') }}</option>
                   <option v-for="dept in departments" :key="dept.id" :value="dept.id">
-                    {{ dept.name_ar || dept.name }}
+                    {{ localizedName(dept) }}
                   </option>
                 </select>
               </div>
@@ -339,7 +339,7 @@
 
             <!-- Phone -->
             <div>
-              <label class="block text-xs font-semibold text-slate-400 mb-1.5">رقم الهاتف</label>
+              <label class="block text-xs font-semibold text-slate-400 mb-1.5">{{ t('رقم الهاتف') }}</label>
               <input
                 v-model="form.phone"
                 type="text"
@@ -352,8 +352,8 @@
             <!-- Active Status -->
             <div class="flex items-center justify-between bg-slate-800/60 rounded-xl px-4 py-3 border border-slate-700">
               <div>
-                <div class="text-sm font-semibold text-slate-200">تفعيل الحساب</div>
-                <div class="text-xs text-slate-400">المستخدم المعطل لا يمكنه تسجيل الدخول</div>
+                <div class="text-sm font-semibold text-slate-200">{{ t('تفعيل الحساب') }}</div>
+                <div class="text-xs text-slate-400">{{ t('المستخدم المعطل لا يمكنه تسجيل الدخول') }}</div>
               </div>
               <button
                 type="button"
@@ -366,10 +366,10 @@
 
             <!-- Roles info box -->
             <div class="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50 text-xs text-slate-400 space-y-1">
-              <p class="font-semibold text-slate-300 mb-1">🔑 شرح الأدوار:</p>
-              <p>• <span class="text-violet-400 font-medium">مدير النظام (Admin)</span> — وصول كامل، إدارة المستخدمين والتذاكر</p>
-              <p>• <span class="text-cyan-400 font-medium">دعم فني (Support)</span> — يستقبل ويعالج التذاكر المعينة له</p>
-              <p>• <span class="text-slate-300 font-medium">مستخدم (User)</span> — يفتح تذاكر ويتابع حالتها فقط</p>
+              <p class="font-semibold text-slate-300 mb-1">{{ t('🔑 شرح الأدوار:') }}</p>
+              <p>• <span class="text-violet-400 font-medium">{{ t('مدير النظام (Admin)') }}</span> {{ t('— وصول كامل، إدارة المستخدمين والتذاكر') }}</p>
+              <p>• <span class="text-cyan-400 font-medium">{{ t('دعم فني (Support)') }}</span> {{ t('— يستقبل ويعالج التذاكر المعينة له') }}</p>
+              <p>• <span class="text-slate-300 font-medium">{{ t('مستخدم (User)') }}</span> {{ t('— يفتح تذاكر ويتابع حالتها فقط') }}</p>
             </div>
 
             <!-- Submit Buttons -->
@@ -383,10 +383,10 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                 </svg>
-                {{ editingUser ? 'حفظ التعديلات' : 'إضافة الموظف' }}
+                {{ editingUser ? t('حفظ التعديلات') : t('إضافة الموظف') }}
               </button>
               <button type="button" @click="closeModal" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm rounded-xl border border-slate-700 transition-colors">
-                إلغاء
+                {{ t('إلغاء') }}
               </button>
             </div>
           </form>
@@ -406,21 +406,21 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-lg font-bold text-white">تأكيد الحذف</h3>
+              <h3 class="text-lg font-bold text-white">{{ t('تأكيد الحذف') }}</h3>
               <p class="text-sm text-slate-400 mt-0.5">
-                هل أنت متأكد من حذف حساب <span class="text-rose-400 font-semibold">{{ deletingUser?.name }}</span>؟
+                {{ t('هل أنت متأكد من حذف حساب') }} <span class="text-rose-400 font-semibold">{{ deletingUser?.name }}</span>{{ t('؟') }}
               </p>
             </div>
           </div>
           <p class="text-xs text-slate-500 bg-slate-800/60 rounded-xl px-4 py-3 border border-slate-700 mb-4">
-            ⚠️ إذا كان للمستخدم تذاكر مرتبطة، سيتم تعطيل الحساب بدلاً من حذفه نهائياً.
+            {{ t('⚠️ إذا كان للمستخدم تذاكر مرتبطة، سيتم تعطيل الحساب بدلاً من حذفه نهائياً.') }}
           </p>
           <div class="flex items-center gap-3">
             <button @click="deleteUser" :disabled="submitting" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm rounded-xl transition-colors disabled:opacity-60">
-              نعم، احذف الحساب
+              {{ t('نعم، احذف الحساب') }}
             </button>
             <button @click="showDeleteModal = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm rounded-xl border border-slate-700 transition-colors">
-              إلغاء
+              {{ t('إلغاء') }}
             </button>
           </div>
         </div>
@@ -434,6 +434,7 @@
 import { ref, reactive } from 'vue';
 import { Link, router, useForm } from '@inertiajs/vue3';
 import AppLayout from '../../Layouts/AppLayout.vue';
+import { localizedName, t, translateMessage } from '../../i18n';
 
 const props = defineProps({
   users: Object,

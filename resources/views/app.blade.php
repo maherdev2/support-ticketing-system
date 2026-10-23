@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="{{ request()->cookie('locale') === 'en' ? 'en' : 'ar' }}" dir="{{ request()->cookie('locale') === 'en' ? 'ltr' : 'rtl' }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

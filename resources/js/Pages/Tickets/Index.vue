@@ -5,8 +5,8 @@
       <!-- Top header with actions -->
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 class="text-2xl font-extrabold text-white tracking-tight">لوحة إدارة تذاكر الدعم الفني</h1>
-          <p class="text-sm text-slate-400 mt-1">تتبع وإدارة جميع طلبات وبلاغات الدعم الفني وتحديث حالتها</p>
+          <h1 class="text-2xl font-extrabold text-white tracking-tight">{{ t('لوحة إدارة تذاكر الدعم الفني') }}</h1>
+          <p class="text-sm text-slate-400 mt-1">{{ t('تتبع وإدارة جميع طلبات وبلاغات الدعم الفني وتحديث حالتها') }}</p>
         </div>
         <div>
           <Link
@@ -16,7 +16,7 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span>فتح تذكرة جديدة</span>
+            <span>{{ t('فتح تذكرة جديدة') }}</span>
           </Link>
         </div>
       </div>
@@ -28,7 +28,7 @@
         <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-slate-400">إجمالي التذاكر</p>
+              <p class="text-xs font-semibold text-slate-400">{{ t('إجمالي التذاكر') }}</p>
               <h3 class="text-3xl font-black text-white mt-1">{{ stats?.total || 0 }}</h3>
             </div>
             <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20">
@@ -37,14 +37,14 @@
               </svg>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-500">سجل التذاكر المتاحة لحسابك</div>
+          <div class="mt-3 text-xs text-slate-500">{{ t('سجل التذاكر المتاحة لحسابك') }}</div>
         </div>
 
         <!-- Open -->
         <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-emerald-500/30 transition-all">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-emerald-400">تذاكر جديدة / مفتوحة</p>
+              <p class="text-xs font-semibold text-emerald-400">{{ t('تذاكر جديدة / مفتوحة') }}</p>
               <h3 class="text-3xl font-black text-emerald-300 mt-1">{{ stats?.open || 0 }}</h3>
             </div>
             <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
@@ -53,14 +53,14 @@
               </svg>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-500">بانتظار المعالجة أو التعيين</div>
+          <div class="mt-3 text-xs text-slate-500">{{ t('بانتظار المعالجة أو التعيين') }}</div>
         </div>
 
         <!-- In Progress -->
         <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-amber-500/30 transition-all">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-amber-400">قيد المعالجة</p>
+              <p class="text-xs font-semibold text-amber-400">{{ t('قيد المعالجة') }}</p>
               <h3 class="text-3xl font-black text-amber-300 mt-1">{{ stats?.in_progress || 0 }}</h3>
             </div>
             <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
@@ -69,14 +69,14 @@
               </svg>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-500">جارٍ العمل عليها من قبل الفريق</div>
+          <div class="mt-3 text-xs text-slate-500">{{ t('جارٍ العمل عليها من قبل الفريق') }}</div>
         </div>
 
         <!-- Resolved -->
         <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-cyan-500/30 transition-all">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-xs font-semibold text-cyan-400">تم حلها / مغلقة</p>
+              <p class="text-xs font-semibold text-cyan-400">{{ t('تم حلها / مغلقة') }}</p>
               <h3 class="text-3xl font-black text-cyan-300 mt-1">{{ stats?.resolved || 0 }}</h3>
             </div>
             <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/20">
@@ -85,7 +85,7 @@
               </svg>
             </div>
           </div>
-          <div class="mt-3 text-xs text-slate-500">تم الانتهاء منها وإغلاقها</div>
+          <div class="mt-3 text-xs text-slate-500">{{ t('تم الانتهاء منها وإغلاقها') }}</div>
         </div>
 
       </div>
@@ -100,7 +100,7 @@
               type="text"
               v-model="searchQuery"
               @keyup.enter="applyFilters"
-              placeholder="ابحث برقم التذكرة، العنوان، أو الوصف..."
+              :placeholder="t('ابحث برقم التذكرة، العنوان، أو الوصف...')"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -117,13 +117,13 @@
               @change="applyFilters"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="all">جميع الحالات</option>
-              <option value="open">مفتوحة (Open)</option>
-              <option value="assigned">معينة (Assigned)</option>
-              <option value="in_progress">قيد المعالجة (In Progress)</option>
-              <option value="waiting_user">في انتظار المستخدم (Waiting User)</option>
-              <option value="resolved">محلولة (Resolved)</option>
-              <option value="closed">مغلقة (Closed)</option>
+              <option value="all">{{ t('جميع الحالات') }}</option>
+              <option value="open">{{ t('مفتوحة (Open)') }}</option>
+              <option value="assigned">{{ t('معينة (Assigned)') }}</option>
+              <option value="in_progress">{{ t('قيد المعالجة (In Progress)') }}</option>
+              <option value="waiting_user">{{ t('في انتظار المستخدم (Waiting User)') }}</option>
+              <option value="resolved">{{ t('محلولة (Resolved)') }}</option>
+              <option value="closed">{{ t('مغلقة (Closed)') }}</option>
             </select>
           </div>
 
@@ -134,11 +134,11 @@
               @change="applyFilters"
               class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="all">جميع الأولويات</option>
-              <option value="urgent">عاجلة جداً (Urgent)</option>
-              <option value="high">عالية (High)</option>
-              <option value="medium">متوسطة (Medium)</option>
-              <option value="low">منخفضة (Low)</option>
+              <option value="all">{{ t('جميع الأولويات') }}</option>
+              <option value="urgent">{{ t('عاجلة جداً (Urgent)') }}</option>
+              <option value="high">{{ t('عالية (High)') }}</option>
+              <option value="medium">{{ t('متوسطة (Medium)') }}</option>
+              <option value="low">{{ t('منخفضة (Low)') }}</option>
             </select>
           </div>
 
@@ -149,17 +149,17 @@
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
         
         <div v-if="tickets.data && tickets.data.length > 0" class="overflow-x-auto">
-          <table class="w-full text-right border-collapse">
+          <table class="w-full text-start border-collapse">
             <thead>
               <tr class="bg-slate-800/60 border-b border-slate-800 text-xs font-semibold text-slate-400">
-                <th class="py-3.5 px-4">رقم التذكرة</th>
-                <th class="py-3.5 px-4">العنوان والتفاصيل</th>
-                <th class="py-3.5 px-4">الأولوية</th>
-                <th class="py-3.5 px-4">الحالة</th>
-                <th class="py-3.5 px-4">مقدم الطلب</th>
-                <th class="py-3.5 px-4">المكلف بالحل</th>
-                <th class="py-3.5 px-4">التاريخ</th>
-                <th class="py-3.5 px-4 text-center">إجراءات</th>
+                <th class="py-3.5 px-4">{{ t('رقم التذكرة') }}</th>
+                <th class="py-3.5 px-4">{{ t('العنوان والتفاصيل') }}</th>
+                <th class="py-3.5 px-4">{{ t('الأولوية') }}</th>
+                <th class="py-3.5 px-4">{{ t('الحالة') }}</th>
+                <th class="py-3.5 px-4">{{ t('مقدم الطلب') }}</th>
+                <th class="py-3.5 px-4">{{ t('المكلف بالحل') }}</th>
+                <th class="py-3.5 px-4">{{ t('التاريخ') }}</th>
+                <th class="py-3.5 px-4 text-center">{{ t('إجراءات') }}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-800/60 text-sm">
@@ -174,7 +174,7 @@
                     {{ ticket.ticket_number }}
                   </div>
                   <div v-if="ticket.category" class="text-[11px] text-slate-500 mt-1">
-                    {{ ticket.category }}
+                    {{ localizedCategory(ticket.category) }}
                   </div>
                 </td>
 
@@ -187,13 +187,13 @@
                     {{ ticket.description }}
                   </p>
                   <div class="flex items-center gap-3 mt-1 text-[11px] text-slate-500">
-                    <span v-if="ticket.department">{{ ticket.department.name_ar || ticket.department.name }}</span>
+                    <span v-if="ticket.department">{{ localizedName(ticket.department) }}</span>
                     <span v-if="ticket.equipment">• {{ ticket.equipment.brand }} {{ ticket.equipment.model }}</span>
                     <span v-if="ticket.replies_count > 0" class="flex items-center gap-1 text-slate-400">
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
-                      {{ ticket.replies_count }} ردود
+                      {{ ticket.replies_count }} {{ t('ردود') }}
                     </span>
                   </div>
                 </td>
@@ -225,7 +225,7 @@
 
                 <!-- Creator -->
                 <td class="py-4 px-4 whitespace-nowrap">
-                  <div class="text-xs font-medium text-slate-200">{{ ticket.creator?.name || 'غير معروف' }}</div>
+                  <div class="text-xs font-medium text-slate-200">{{ ticket.creator?.name || t('غير معروف') }}</div>
                   <div class="text-[11px] text-slate-500">{{ ticket.creator?.email }}</div>
                 </td>
 
@@ -235,7 +235,7 @@
                     {{ ticket.assigned_user.name }}
                   </div>
                   <div v-else class="text-xs text-slate-500 italic">
-                    لم يُعين بعد
+                    {{ t('لم يُعين بعد') }}
                   </div>
                 </td>
 
@@ -250,7 +250,7 @@
                     :href="route('tickets.show', ticket.id)"
                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/30 text-indigo-400 hover:text-indigo-300 text-xs font-medium border border-slate-700/80 hover:border-indigo-500/40 transition-all"
                   >
-                    <span>عرض</span>
+                    <span>{{ t('عرض') }}</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
@@ -268,16 +268,16 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h3 class="text-lg font-bold text-slate-200">لا توجد تذاكر مطابقة</h3>
+          <h3 class="text-lg font-bold text-slate-200">{{ t('لا توجد تذاكر مطابقة') }}</h3>
           <p class="text-sm text-slate-400 mt-1 max-w-sm mx-auto">
-            لم يتم العثور على أي تذاكر بالمعايير المحددة، يمكنك تجربة البحث بكلمات أخرى أو إنشاء تذكرة جديدة.
+            {{ t('لم يتم العثور على أي تذاكر بالمعايير المحددة، يمكنك تجربة البحث بكلمات أخرى أو إنشاء تذكرة جديدة.') }}
           </p>
           <div class="mt-6">
             <Link
               :href="route('tickets.create')"
               class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-xl shadow transition-colors"
             >
-              فتح تذكرة جديدة الآن
+              {{ t('فتح تذكرة جديدة الآن') }}
             </Link>
           </div>
         </div>
@@ -285,7 +285,7 @@
         <!-- Pagination -->
         <div v-if="tickets.links && tickets.links.length > 3" class="bg-slate-800/40 border-t border-slate-800 px-4 py-3 flex items-center justify-between">
           <div class="text-xs text-slate-400">
-            عرض {{ tickets.from || 0 }} إلى {{ tickets.to || 0 }} من أصل {{ tickets.total || 0 }} تذكرة
+            {{ t('عرض') }} {{ tickets.from || 0 }} {{ t('إلى') }} {{ tickets.to || 0 }} {{ t('من أصل') }} {{ tickets.total || 0 }} {{ t('تذكرة') }}
           </div>
           <div class="flex items-center gap-1">
             <Link
@@ -315,6 +315,7 @@
 import { ref } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import AppLayout from '../../Layouts/AppLayout.vue';
+import { locale, localizedCategory, localizedName, t } from '../../i18n';
 
 const props = defineProps({
   tickets: Object,
@@ -344,22 +345,22 @@ const applyFilters = () => {
 const getPriorityBadge = (priority) => {
   const map = {
     urgent: {
-      label: 'عاجلة جداً',
+      label: t('عاجلة جداً'),
       class: 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
       dot: 'bg-rose-400 animate-pulse',
     },
     high: {
-      label: 'عالية',
+      label: t('عالية'),
       class: 'bg-orange-500/15 text-orange-400 border border-orange-500/30',
       dot: 'bg-orange-400',
     },
     medium: {
-      label: 'متوسطة',
+      label: t('متوسطة'),
       class: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',
       dot: 'bg-blue-400',
     },
     low: {
-      label: 'منخفضة',
+      label: t('منخفضة'),
       class: 'bg-slate-500/15 text-slate-300 border border-slate-600/30',
       dot: 'bg-slate-400',
     },
@@ -370,27 +371,27 @@ const getPriorityBadge = (priority) => {
 const getStatusBadge = (status) => {
   const map = {
     open: {
-      label: 'مفتوحة',
+      label: t('مفتوحة'),
       class: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
     },
     assigned: {
-      label: 'معينة',
+      label: t('معينة'),
       class: 'bg-blue-500/15 text-blue-400 border border-blue-500/30',
     },
     in_progress: {
-      label: 'قيد المعالجة',
+      label: t('قيد المعالجة'),
       class: 'bg-purple-500/15 text-purple-400 border border-purple-500/30',
     },
     waiting_user: {
-      label: 'في انتظار المستخدم',
+      label: t('في انتظار المستخدم'),
       class: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
     },
     resolved: {
-      label: 'محلولة',
+      label: t('محلولة'),
       class: 'bg-teal-500/15 text-teal-400 border border-teal-500/30',
     },
     closed: {
-      label: 'مغلقة',
+      label: t('مغلقة'),
       class: 'bg-slate-700/60 text-slate-400 border border-slate-700',
     },
   };
@@ -399,7 +400,7 @@ const getStatusBadge = (status) => {
 
 const formatDate = (dateString) => {
   if (!dateString) return '';
-  return new Date(dateString).toLocaleDateString('ar-SA', {
+  return new Date(dateString).toLocaleDateString(locale.value === 'en' ? 'en-US' : 'ar-SA', {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',

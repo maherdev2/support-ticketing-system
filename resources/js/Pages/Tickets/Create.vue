@@ -12,10 +12,10 @@
             <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
-            <span>العودة إلى قائمة التذاكر</span>
+            <span>{{ t('العودة إلى قائمة التذاكر') }}</span>
           </Link>
-          <h1 class="text-2xl font-extrabold text-white tracking-tight">فتح تذكرة دعم فني جديدة</h1>
-          <p class="text-sm text-slate-400 mt-0.5">يرجى تعبئة تفاصيل المشكلة بدقة لمساعدتنا على حلها في أسرع وقت</p>
+          <h1 class="text-2xl font-extrabold text-white tracking-tight">{{ t('فتح تذكرة دعم فني جديدة') }}</h1>
+          <p class="text-sm text-slate-400 mt-0.5">{{ t('يرجى تعبئة تفاصيل المشكلة بدقة لمساعدتنا على حلها في أسرع وقت') }}</p>
         </div>
       </div>
 
@@ -26,16 +26,16 @@
           <!-- Title -->
           <div>
             <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-              عنوان التذكرة / المشكلة <span class="text-rose-400">*</span>
+              {{ t('عنوان التذكرة / المشكلة') }} <span class="text-rose-400">*</span>
             </label>
             <input
               type="text"
               v-model="form.title"
               required
-              placeholder="مثال: تعذر الاتصال بالطابعة في الدور الثاني أو عطل بالبريد"
+              :placeholder="t('مثال: تعذر الاتصال بالطابعة في الدور الثاني أو عطل بالبريد')"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
             />
-            <div v-if="form.errors.title" class="text-xs text-rose-400 mt-1.5">{{ form.errors.title }}</div>
+            <div v-if="form.errors.title" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.title) }}</div>
           </div>
 
           <!-- Priority & Category Grid -->
@@ -44,39 +44,39 @@
             <!-- Priority -->
             <div>
               <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-                مستوى الأولوية <span class="text-rose-400">*</span>
+                {{ t('مستوى الأولوية') }} <span class="text-rose-400">*</span>
               </label>
               <select
                 v-model="form.priority"
                 required
                 class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="low">منخفضة (Low) - استفسارات عامة</option>
-                <option value="medium">متوسطة (Medium) - مشكلة لا تعطل العمل كلياً</option>
-                <option value="high">عالية (High) - عطل يؤثر على إنجاز العمل</option>
-                <option value="urgent">عاجلة جداً (Urgent) - توقف العمل بالكامل</option>
+                <option value="low">{{ t('منخفضة (Low) - استفسارات عامة') }}</option>
+                <option value="medium">{{ t('متوسطة (Medium) - مشكلة لا تعطل العمل كلياً') }}</option>
+                <option value="high">{{ t('عالية (High) - عطل يؤثر على إنجاز العمل') }}</option>
+                <option value="urgent">{{ t('عاجلة جداً (Urgent) - توقف العمل بالكامل') }}</option>
               </select>
-              <div v-if="form.errors.priority" class="text-xs text-rose-400 mt-1.5">{{ form.errors.priority }}</div>
+              <div v-if="form.errors.priority" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.priority) }}</div>
             </div>
 
             <!-- Category -->
             <div>
               <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-                تصنيف المشكلة
+                {{ t('تصنيف المشكلة') }}
               </label>
               <select
                 v-model="form.category"
                 class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="">اختر التصنيف (اختياري)</option>
-                <option value="hardware">أجهزة ومعدات (Hardware)</option>
-                <option value="software">برمجيات وأنظمة (Software)</option>
-                <option value="network">شبكات وإنترنت (Network)</option>
-                <option value="access">صلاحيات وحسابات (Access / Accounts)</option>
-                <option value="email">البريد الإلكتروني والاتصالات (Email)</option>
-                <option value="other">أخرى (Other)</option>
+                <option value="">{{ t('اختر التصنيف (اختياري)') }}</option>
+                <option value="hardware">{{ t('أجهزة ومعدات (Hardware)') }}</option>
+                <option value="software">{{ t('برمجيات وأنظمة (Software)') }}</option>
+                <option value="network">{{ t('شبكات وإنترنت (Network)') }}</option>
+                <option value="access">{{ t('صلاحيات وحسابات (Access / Accounts)') }}</option>
+                <option value="email">{{ t('البريد الإلكتروني والاتصالات (Email)') }}</option>
+                <option value="other">{{ t('أخرى (Other)') }}</option>
               </select>
-              <div v-if="form.errors.category" class="text-xs text-rose-400 mt-1.5">{{ form.errors.category }}</div>
+              <div v-if="form.errors.category" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.category) }}</div>
             </div>
 
           </div>
@@ -87,35 +87,35 @@
             <!-- Department -->
             <div>
               <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-                القسم الموجه له التذكرة
+                {{ t('القسم الموجه له التذكرة') }}
               </label>
               <select
                 v-model="form.department_id"
                 class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option :value="null">القسم الافتراضي</option>
+                <option :value="null">{{ t('القسم الافتراضي') }}</option>
                 <option v-for="dept in departments" :key="dept.id" :value="dept.id">
-                  {{ dept.name_ar || dept.name }}
+                  {{ localizedName(dept) }}
                 </option>
               </select>
-              <div v-if="form.errors.department_id" class="text-xs text-rose-400 mt-1.5">{{ form.errors.department_id }}</div>
+              <div v-if="form.errors.department_id" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.department_id) }}</div>
             </div>
 
             <!-- Equipment -->
             <div>
               <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-                الجهاز أو المعدة المعنية
+                {{ t('الجهاز أو المعدة المعنية') }}
               </label>
               <select
                 v-model="form.equipment_id"
                 class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option :value="null">لا يوجد جهاز محدد</option>
+                <option :value="null">{{ t('لا يوجد جهاز محدد') }}</option>
                 <option v-for="eq in equipment" :key="eq.id" :value="eq.id">
                   {{ eq.brand }} {{ eq.model }} ({{ eq.serial_number }})
                 </option>
               </select>
-              <div v-if="form.errors.equipment_id" class="text-xs text-rose-400 mt-1.5">{{ form.errors.equipment_id }}</div>
+              <div v-if="form.errors.equipment_id" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.equipment_id) }}</div>
             </div>
 
           </div>
@@ -123,22 +123,22 @@
           <!-- Description -->
           <div>
             <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-              تفاصيل المشكلة والوصف <span class="text-rose-400">*</span>
+              {{ t('تفاصيل المشكلة والوصف') }} <span class="text-rose-400">*</span>
             </label>
             <textarea
               v-model="form.description"
               required
               rows="6"
-              placeholder="اكتب شرحاً مفصلاً للمشكلة والخطوات التي قمت بها ورسائل الخطأ إن وجدت..."
+              :placeholder="t('اكتب شرحاً مفصلاً للمشكلة والخطوات التي قمت بها ورسائل الخطأ إن وجدت...')"
               class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm leading-relaxed"
             ></textarea>
-            <div v-if="form.errors.description" class="text-xs text-rose-400 mt-1.5">{{ form.errors.description }}</div>
+            <div v-if="form.errors.description" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.description) }}</div>
           </div>
 
           <!-- Attachments File Upload Area -->
           <div>
             <label class="block text-sm font-semibold text-slate-200 mb-1.5">
-              إرفاق ملفات أو لقطات شاشة (اختياري)
+              {{ t('إرفاق ملفات أو لقطات شاشة (اختياري)') }}
             </label>
             
             <div
@@ -158,8 +158,8 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
-              <p class="text-sm font-medium text-slate-200">انقر هنا لاختيار الملفات أو الصور المرفقة</p>
-              <p class="text-xs text-slate-400 mt-1">الأنواع المسموحة: الصور، PDF، المستندات، ملفات السجل (حتى 5 ملفات بحد أقصى 10MB لكل ملف)</p>
+              <p class="text-sm font-medium text-slate-200">{{ t('انقر هنا لاختيار الملفات أو الصور المرفقة') }}</p>
+              <p class="text-xs text-slate-400 mt-1">{{ t('الأنواع المسموحة: الصور، PDF، المستندات، ملفات السجل (حتى 5 ملفات بحد أقصى 10MB لكل ملف)') }}</p>
             </div>
 
             <!-- Selected Files List -->
@@ -190,7 +190,7 @@
               </div>
             </div>
             
-            <div v-if="form.errors.attachments" class="text-xs text-rose-400 mt-1.5">{{ form.errors.attachments }}</div>
+            <div v-if="form.errors.attachments" class="text-xs text-rose-400 mt-1.5">{{ translateMessage(form.errors.attachments) }}</div>
           </div>
 
           <!-- Action Buttons -->
@@ -199,14 +199,14 @@
               :href="route('tickets.index')"
               class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-sm font-medium transition-colors"
             >
-              إلغاء
+              {{ t('إلغاء') }}
             </Link>
             <button
               type="submit"
               :disabled="form.processing"
               class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-150 disabled:opacity-50"
             >
-              {{ form.processing ? 'جارٍ إرسال التذكرة...' : 'إرسال التذكرة' }}
+              {{ form.processing ? t('جارٍ إرسال التذكرة...') : t('إرسال التذكرة') }}
             </button>
           </div>
 
@@ -220,6 +220,7 @@
 <script setup>
 import { useForm, Link } from '@inertiajs/vue3';
 import AppLayout from '../../Layouts/AppLayout.vue';
+import { localizedName, t, translateMessage } from '../../i18n';
 
 defineProps({
   departments: {
@@ -245,7 +246,7 @@ const form = useForm({
 const handleFileChange = (e) => {
   const files = Array.from(e.target.files);
   if (form.attachments.length + files.length > 5) {
-    alert('الحد الأقصى للمرفقات هو 5 ملفات');
+    alert(t('الحد الأقصى للمرفقات هو 5 ملفات'));
     return;
   }
   form.attachments.push(...files);
