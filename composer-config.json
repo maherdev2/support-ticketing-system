@@ -1,0 +1,12 @@
+{
+    "config": {
+        "allow-plugins": {
+            "*": true
+        },
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
+    }
+}
